@@ -3,6 +3,13 @@ from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from openai import AzureOpenAI
+from fastapi import FastAPI
+
+app = FastAPI()
+@app.get("/")
+def index():
+    return {"Hello": "World"}
+
 
 client = AzureOpenAI(
   azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT"), 
@@ -29,9 +36,7 @@ app = App(
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-# 'hello' を含むメッセージをリッスンします
-# 指定可能なリスナーのメソッド引数の一覧は以下のモジュールドキュメントを参考にしてください：
-# https://slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html
+
 @app.event("app_mention")
 def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
@@ -41,7 +46,12 @@ def message_hello(say):
 @app.message("hello")
 def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("helloa!")
+    say("hello!")
+
+@app.message("hoge")
+def hoge_hello(say):
+    # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
+    say("hogehoge")
 
 @app.message("You are a helpful assistant")
 def message_hello(say):
