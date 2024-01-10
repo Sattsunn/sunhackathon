@@ -3,12 +3,6 @@ from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from openai import AzureOpenAI
-from fastapi import FastAPI
-
-app = FastAPI()
-@app.get("/")
-def index():
-    return {"Hello": "World"}
 
 
 
