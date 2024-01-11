@@ -32,7 +32,7 @@ def generate_gpt_reply(message):
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
             {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
-            {"role": "user", "content": "{message}"}
+            {"role": "user", "content": message}
         ]
     )
     except :
