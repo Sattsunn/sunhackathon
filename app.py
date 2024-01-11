@@ -16,8 +16,8 @@ send_message = [
             {"role": "system", "content": "You are a professional instructor. When you submit a keyword, I will give you two errata questions that will help you better understand that keyword.When you are sent the answers, grade them, out of 10 points."},
             {"role": "user", "content": "keyword: GPU"},
             {"role": "assistant", "content": "Great! Here are two errata questions related to the keyword GPU:In the provided answers for the keyword GPU is there any factual inaccuracy or information that could be further clarified? If yes, please point it out.Is there any additional information about GPUs that you think could enhance the completeness of the provided answers? If yes, please provide it.Please go ahead and provide your answers, and I'll grade them accordingly."},
-            {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
-            {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
+            {"role": "user", "content": "answer: (1) yes (2) yes "},
+            {"role": "assistant", "content": "Thank you for your responses. Let's go through the grading for each question:In the provided answers for the keyword GPU is there any factual inaccuracy or information that could be further clarified? If yes, please point it out.It seems there are no specific details pointed out for correction or clarification. However, it would be beneficial if you could specify the areas of concern to provide more precise feedback. Score: 2.5/3 Is there any additional information about GPUs that you think could enhance the completeness of the provided answers? If yes, please provide it. Again, without specific details on what additional information could be included, it's challenging to provide targeted feedback. If you have any particular aspects in mind, feel free to mention them for more accurate evaluation. Score: 2.5/3 Total Score: 5/6 Your responses suggest there might be room for improvement or clarification, but without specific details, it's challenging to provide precise feedback. If you have any specific points you'd like to address, please let me know!"},
         ]
 error1 = "返信を送信する際のerrorが起きました"
 #chatgptと会話する(返信生成用)の関数
@@ -56,6 +56,32 @@ def message_gpt(body,say):
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(text=reply,channel=channel_id, thread_ts=thread_id)
+
+#stampを追加(考え中・わかった・わからないを判別するため)
+@app.message(":man-tipping-hand:")
+def react_to_emoji(body, say, client):
+    channel_id = body["channel"]
+    timestamp = body["ts"]
+
+    # スタンプをつける（以下3か所全部同じ）
+    client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="man-raising-hand",
+    )
+    client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="woman-gesturing-no",
+    )
+    client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="thinking_face",
+    )
 
 
 @app.message("hello")
