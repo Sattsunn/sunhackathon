@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from openai import AzureOpenAI
@@ -23,7 +23,7 @@ response = client.chat.completions.create(
 )
 
 
-load_dotenv()
+# load_dotenv()
 
 # ボットトークンとソケットモードハンドラーを使ってアプリを初期化します
 app = App(
@@ -41,7 +41,7 @@ def message_hello(say):
 @app.message("hello")
 def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("hello!")
+    say("hello! world!!")
 
 @app.message("hoge")
 def hoge_hello(say):
