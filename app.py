@@ -29,15 +29,19 @@ send_message = [
 error1 = "返信を送信する際のerrorが起きました"
 #chatgptと会話する(返信生成用)の関数
 def generate_gpt_reply(message):
+    #apiへ送るメッセージに送られたmessageを追加する
     send_message.append({"role": "user", "content": message})
     try:
         response = client.chat.completions.create(
         model="GPT35TURBO", # model = "deployment_name".
         messages= send_message
     )
+        
     except :
         return error1
     reply = response.choices[0].message.content
+    #返信をapiに送るメッセージに追加する
+    send_message.append({"role": "assistant", "content": reply})
     return reply
 
 # load_dotenv()
@@ -51,10 +55,13 @@ app = App(
 
 @app.event("app_mention")
 def message_gpt(body,say):
+    #channel,messageなどをbodyから取り出す
+    channel_id = body["event"]["channel"]
     send_message = body["event"]["text"]
+    thread_id = body["event"]["ts"]
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say(reply)
+    say(text=reply,channel=channel_id, thread_ts=thread_id)
 
 
 @app.message("hello")
