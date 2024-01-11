@@ -12,17 +12,10 @@ client = AzureOpenAI(
   api_version="2023-05-15"
 )
 
-# response = client.chat.completions.create(
-#     model="GPT35TURBO", # model = "deployment_name".
-#     messages=[
-#         {"role": "system", "content": "You are a helpful assistant."},
-#         {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
-#         {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
-#         {"role": "user", "content": "Do other Azure AI services support this too?"}
-#     ]
-# )
 send_message = [
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a professional instructor. When you submit a keyword, I will give you two errata questions that will help you better understand that keyword.When you are sent the answers, grade them, out of 10 points."},
+            {"role": "user", "content": "keyword: GPU"},
+            {"role": "assistant", "content": "Great! Here are two errata questions related to the keyword GPU:In the provided answers for the keyword GPU is there any factual inaccuracy or information that could be further clarified? If yes, please point it out.Is there any additional information about GPUs that you think could enhance the completeness of the provided answers? If yes, please provide it.Please go ahead and provide your answers, and I'll grade them accordingly."},
             {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
             {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
         ]
@@ -59,6 +52,7 @@ def message_gpt(body,say):
     channel_id = body["event"]["channel"]
     send_message = body["event"]["text"]
     thread_id = body["event"]["ts"]
+    #関数を使ってreplyを生成
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(text=reply,channel=channel_id, thread_ts=thread_id)
