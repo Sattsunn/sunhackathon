@@ -41,7 +41,7 @@ def message_hello(say):
 @app.message("hello")
 def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("hello! world!!")
+    say("hello! world!!!!!")
 
 @app.message("hoge")
 def hoge_hello(say):
