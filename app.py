@@ -12,25 +12,24 @@ client = AzureOpenAI(
   api_version="2023-05-15"
 )
 
-response = client.chat.completions.create(
-    model="GPT35TURBO", # model = "deployment_name".
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
-        {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
-        {"role": "user", "content": "Do other Azure AI services support this too?"}
-    ]
-)
-
-error1 = "返信を送信する際のerrorが起きました"
-#chatgptと会話する(返信生成用)の関数
-def generate_gpt_reply(message):
-    send_message = [
+# response = client.chat.completions.create(
+#     model="GPT35TURBO", # model = "deployment_name".
+#     messages=[
+#         {"role": "system", "content": "You are a helpful assistant."},
+#         {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
+#         {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
+#         {"role": "user", "content": "Do other Azure AI services support this too?"}
+#     ]
+# )
+send_message = [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
             {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
-            {"role": "user", "content": "hello, please tell me more about you"}
         ]
+error1 = "返信を送信する際のerrorが起きました"
+#chatgptと会話する(返信生成用)の関数
+def generate_gpt_reply(message):
+    send_message.append({"role": "user", "content": message['text']})
     try:
         response = client.chat.completions.create(
         model="GPT35TURBO", # model = "deployment_name".
@@ -58,9 +57,9 @@ def message_gpt(message,say):
 
 
 @app.message("hello")
-def message_hello(say):
+def message_hello(message,say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("hello! world!!!!!")
+    say(f"Hello, {message['user']}!,{message['contents']}")
 
 @app.message("hoge")
 def hoge_hello(say):
@@ -75,7 +74,7 @@ def hoge_aiu(say):
 @app.message("You are a helpful assistant")
 def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say(response.choices[0].message.content)
+    say("thank you!")
 
 
 
