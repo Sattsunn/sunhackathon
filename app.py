@@ -25,15 +25,16 @@ response = client.chat.completions.create(
 error1 = "返信を送信する際のerrorが起きました"
 #chatgptと会話する(返信生成用)の関数
 def generate_gpt_reply(message):
-    try:
-        response = client.chat.completions.create(
-        model="GPT35TURBO", # model = "deployment_name".
-        messages=[
+    send_message = [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
             {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
-            {"role": "user", "content": message}
+            {"role": "user", "content": "hello, please tell me more about you"}
         ]
+    try:
+        response = client.chat.completions.create(
+        model="GPT35TURBO", # model = "deployment_name".
+        messages= send_message
     )
     except :
         return error1
