@@ -22,6 +22,23 @@ response = client.chat.completions.create(
     ]
 )
 
+error1 = "返信を送信する際のerrorが起きました"
+#chatgptと会話する(返信生成用)の関数
+def generate_gpt_reply(message):
+    try:
+        response = client.chat.completions.create(
+        model="GPT35TURBO", # model = "deployment_name".
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
+            {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
+            {"role": "user", "content": "{message}"}
+        ]
+    )
+    except :
+        return error1
+    reply = response.choices[0].message.content
+    return reply
 
 # load_dotenv()
 
@@ -33,9 +50,10 @@ app = App(
 
 
 @app.event("app_mention")
-def message_hello(say):
+def message_gpt(message,say):
+    reply = generate_gpt_reply(message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say(response.choices[0].message.content)
+    say(reply)
 
 
 @app.message("hello")
@@ -49,7 +67,7 @@ def hoge_hello(say):
     say("hogehoge")
 
 @app.message("あいう")
-def hoge_hello(say):
+def hoge_aiu(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say("hogehoge")
 
