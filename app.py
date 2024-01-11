@@ -50,8 +50,8 @@ app = App(
 
 
 @app.event("app_mention")
-def message_gpt(message,say):
-    send_message = message['text']
+def message_gpt(body,say):
+    send_message = body["event"]["text"]
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(reply)
