@@ -4,11 +4,10 @@ import json
 
 from time import sleep
 
-#WEB_HOOK_URLに、自身のURLを設定
-WEB_HOOK_URL = "https://sunhackathon.onrender.com/slack/events"
+
 
 def job():
-    requests.post("WEB_HOOK_URL", data=json.dumps({
+    requests.post("https://sunhackathon.onrender.com/slack/events", data=json.dumps({
         #メッセージ
         "text" : "検索しましょう<https://www.google.com/|ggrks>",
         #名前
