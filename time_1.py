@@ -30,8 +30,8 @@ class CrontabControl:
             print("予定していたスケジュールを実行しました")
  
 def main():
-    command = 'python3 .time_1.py'
-    schedule = '25 13 * * *'
+    command = 'python3 time_1.py'
+    schedule = '45 13 * * *'
     file = 'output.tab'
  
     # インスタンス作成
