@@ -59,30 +59,29 @@ def message_gpt(body,say):
 
 #stampを追加(考え中・わかった・わからないを判別するため)
 @app.message(":man-tipping-hand:")
-def react_to_emoji(message,client):
+async def react_to_emoji(message, client ):
     channel_id = message["channel"]
     timestamp = message["ts"]
-
-    # スタンプをつける（以下3か所全部同じ）
-    client.reactions.add(
+    
+    # スタンプをつける
+    await app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
-        name="man-raising-hand",
+        name="man-raising-hand"
     )
-    client.reactions.add(
-        # token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="woman-gesturing-no",
-    )
-    client.reactions_add(
+    await app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
-        name="thinking_face",
+        name="woman-gesturing-no"
     )
-
+    await app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="thinking_face"
+    )
 
 @app.message("hello")
 def message_hello(message,say):
