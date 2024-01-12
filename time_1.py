@@ -7,7 +7,7 @@ from time import sleep
 
 
 def job():
-    requests.post("https://sunhackathon.onrender.com/slack/events", data=json.dumps({
+    requests.post("https://hooks.slack.com/services/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", data=json.dumps({
         #メッセージ
         "text" : "検索しましょう<https://www.google.com/|ggrks>",
         #名前
