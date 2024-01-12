@@ -2,7 +2,7 @@
 # import requests
 # import json
 # from dotenv import load_dotenv
-from datetime import datetime
+# from datetime import datetime
 from slacker import Slacker
 
 # from time import sleep
