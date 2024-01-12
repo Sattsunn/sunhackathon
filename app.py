@@ -58,20 +58,20 @@ def message_gpt(body,say):
     say(text=reply,channel=channel_id, thread_ts=thread_id)
 
 #stampを追加(考え中・わかった・わからないを判別するため)
-@app.message(":man-tipping-hand:")
-def react_to_emoji(body,client):
-    channel_id = body["channel"]
-    timestamp = body["ts"]
+@app.message(".*<@([^>]+)>.*")
+def react_to_emoji(message,client):
+    channel_id = message["channel"]
+    timestamp = message["ts"]
 
     # スタンプをつける（以下3か所全部同じ）
-    client.reactions_add(
+    client.reactions.add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
         name="man-raising-hand",
     )
-    client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
+    client.reactions.add(
+        # token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
         name="woman-gesturing-no",
