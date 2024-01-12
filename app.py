@@ -58,30 +58,30 @@ def message_gpt(body,say):
     say(text=reply,channel=channel_id, thread_ts=thread_id)
 
 #stampを追加(考え中・わかった・わからないを判別するため)
-@app.message(":man-tipping-hand:")
-async def react_to_emoji(message, client ):
-    channel_id = message["channel"]
-    timestamp = message["ts"]
+@app.event("app_mention")
+async def react_to_emoji(event, client, say):
+    channel_id = event["channel"]
+    timestamp = event["ts"]
     
     # スタンプをつける
-    await app.client.reactions_add(
+    api_response = await client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
-        name="man-raising-hand"
+        name="eyes"
     )
-    await app.client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="woman-gesturing-no"
-    )
-    await app.client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="thinking_face"
-    )
+    # await app.client.reactions_add(
+    #     token=os.environ.get("SLACK_BOT_TOKEN"),
+    #     channel=channel_id,
+    #     timestamp=timestamp,
+    #     name="woman-gesturing-no"
+    # )
+    # await app.client.reactions_add(
+    #     token=os.environ.get("SLACK_BOT_TOKEN"),
+    #     channel=channel_id,
+    #     timestamp=timestamp,
+    #     name="thinking_face"
+    # )
 
 @app.message("hello")
 def message_hello(message,say):
