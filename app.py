@@ -58,18 +58,19 @@ def message_gpt(body,say):
     say(text=reply,channel=channel_id, thread_ts=thread_id)
 
 #stampを追加(考え中・わかった・わからないを判別するため)
-# @app.event("app_mention")
+@app.message("hello!")
 async def react_to_emoji(event, client, say):
     channel_id = event["channel"]
     timestamp = event["ts"]
     
     # スタンプをつける
-    api_response = await client.reactions_add(
+    await app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
         name="eyes"
     )
+    say("hello")
     # await app.client.reactions_add(
     #     token=os.environ.get("SLACK_BOT_TOKEN"),
     #     channel=channel_id,
@@ -83,7 +84,7 @@ async def react_to_emoji(event, client, say):
     #     name="thinking_face"
     # )
 
-@app.message("hello")
+@app.message("")
 def message_hello(message,say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(text=f"Hello, {message['user']}!,{message['contents']}")
