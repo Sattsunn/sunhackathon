@@ -59,9 +59,9 @@ def message_gpt(body,say):
 
 #stampを追加(考え中・わかった・わからないを判別するため)
 @app.message("hello!")
-def react_to_emoji(event, client, say):
-    channel_id = event["channel"]
-    timestamp = event["ts"]
+def react_to_emoji(message, client, say):
+    channel_id = message["channel"]
+    timestamp = message["ts"]
     
     # スタンプをつける
     app.client.reactions_add(
