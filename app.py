@@ -58,6 +58,8 @@ def message_hello(say):
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(response.choices[0].message.content)
 
+# sattsun
+    
 
 
 
