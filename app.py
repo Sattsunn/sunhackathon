@@ -58,7 +58,7 @@ def message_gpt(body,say):
     say(text=reply,channel=channel_id, thread_ts=thread_id)
 
 #stampを追加(考え中・わかった・わからないを判別するため)
-@app.event("app_mention")
+# @app.event("app_mention")
 async def react_to_emoji(event, client, say):
     channel_id = event["channel"]
     timestamp = event["ts"]
