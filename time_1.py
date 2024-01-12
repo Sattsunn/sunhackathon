@@ -1,15 +1,5 @@
-# import schedule
-# import requests
-# import json
-# from dotenv import load_dotenv
-# from datetime import datetime
 from slacker import Slacker
-
-# from time import sleep
-
 from crontab import CronTab
-
-# load_dotenv()
 
 slack = Slacker("SLACK_BOT_TOKEN")
 
