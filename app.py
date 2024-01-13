@@ -52,11 +52,30 @@ def message_gpt(body,say):
     channel_id = body["event"]["channel"]
     send_message = body["event"]["text"]
     thread_id = body["event"]["ts"]
+    timestamp = body["event"]["ts"]
     #関数を使ってreplyを生成
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
     say(text=reply,channel=channel_id, thread_ts=thread_id)
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="man-raising-hand"
+    )
 
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="woman-gesturing-no"
+    )
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="thinking_face"
+    )
 #stampを追加(考え中・わかった・わからないを判別するため)
 @app.message("hello!!")
 def react_to_emoji(message, client, say):
@@ -71,18 +90,18 @@ def react_to_emoji(message, client, say):
         name="eyes"
     )
 
-    # await app.client.reactions_add(
-    #     token=os.environ.get("SLACK_BOT_TOKEN"),
-    #     channel=channel_id,
-    #     timestamp=timestamp,
-    #     name="woman-gesturing-no"
-    # )
-    # await app.client.reactions_add(
-    #     token=os.environ.get("SLACK_BOT_TOKEN"),
-    #     channel=channel_id,
-    #     timestamp=timestamp,
-    #     name="thinking_face"
-    # )
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="woman-gesturing-no"
+    )
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=timestamp,
+        name="thinking_face"
+    )
 
 @app.message("")
 def message_hello(message,say):
