@@ -62,7 +62,7 @@ def message_gpt(body,say):
 def react_to_emoji(message, client, say):
     channel_id = message["channel"]
     timestamp = message["ts"]
-    
+    say("hello")
     # スタンプをつける
     app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
@@ -70,7 +70,7 @@ def react_to_emoji(message, client, say):
         timestamp=timestamp,
         name="eyes"
     )
-    say("hello")
+
     # await app.client.reactions_add(
     #     token=os.environ.get("SLACK_BOT_TOKEN"),
     #     channel=channel_id,
