@@ -56,7 +56,7 @@ def message_gpt(body,say):
     #関数を使ってreplyを生成
     reply = generate_gpt_reply(send_message)
     # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say(text=reply,channel=channel_id, thread_ts=thread_id)
+    message_response = say(text=reply,channel=channel_id, thread_ts=thread_id)
     app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
@@ -74,6 +74,26 @@ def message_gpt(body,say):
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
         timestamp=timestamp,
+        name="thinking_face"
+    )
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=message_response["ts"],
+        name="man-raising-hand"
+    )
+    
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=message_response["ts"],
+        name="woman-gesturing-no"
+    )
+    
+    app.client.reactions_add(
+        token=os.environ.get("SLACK_BOT_TOKEN"),
+        channel=channel_id,
+        timestamp=message_response["ts"],
         name="thinking_face"
     )
 #stampを追加(考え中・わかった・わからないを判別するため)
