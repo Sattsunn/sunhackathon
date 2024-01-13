@@ -76,6 +76,7 @@ def message_gpt(body,say):
         timestamp=timestamp,
         name="thinking_face"
     )
+    # reaction用のスタンプ
     app.client.reactions_add(
         token=os.environ.get("SLACK_BOT_TOKEN"),
         channel=channel_id,
@@ -96,52 +97,6 @@ def message_gpt(body,say):
         timestamp=message_response["ts"],
         name="thinking_face"
     )
-#stampを追加(考え中・わかった・わからないを判別するため)
-@app.message("hello!!")
-def react_to_emoji(message, client, say):
-    channel_id = message["channel"]
-    timestamp = message["ts"]
-    say("hello")
-    # スタンプをつける
-    app.client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="eyes"
-    )
-
-    app.client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="woman-gesturing-no"
-    )
-    app.client.reactions_add(
-        token=os.environ.get("SLACK_BOT_TOKEN"),
-        channel=channel_id,
-        timestamp=timestamp,
-        name="thinking_face"
-    )
-
-@app.message("")
-def message_hello(message,say):
-    # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say(text=f"Hello, {message['user']}!,{message['contents']}")
-
-@app.message("hoge")
-def hoge_hello(say):
-    # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("hogehoge")
-
-@app.message("あいう")
-def hoge_aiu(say):
-    # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("hogehoge")
-
-@app.message("You are a helpful assistant")
-def message_hello(say):
-    # イベントがトリガーされたチャンネルへ say() でメッセージを送信します
-    say("thank you!")
 
 # sattsun
     
